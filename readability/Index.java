@@ -1,0 +1,51 @@
+package readability;
+
+public enum Index {
+    KINDERGARTEN (1, "5-6", "Kindergarten"),
+    FIRST_SECOND (2, "6-7", "First/Second Grade"),
+    THIRD (3, "7-9", "Third Grade"),
+    FOURTH(4, "9-10", "Fourth Grade"),
+    FIFTH(5, "10-11", "Fifth Grade"),
+    SIXTH(6, "11-12", "Sixth Grade"),
+    SEVENTH(7, "12-13", "Seventh Grade"),
+    EIGHTH(8, "13-14", "Eighth Grade"),
+    NINTH(9, "14-15", "Ninth Grade"),
+    TENTH(10, "15-16", "Tenth Grade"),
+    ELEVENTH(11, "16-17", "Eleventh Grade"),
+    TWELFTH(12, "17-18", "Twelfth grade"),
+    COLLEGE(13, "18-24", "College student"),
+    PROFESSOR(14, "24+", "Professor");
+
+    private final int score;
+    private final String ages;
+    private final String gradeLevel;
+
+    private Index(int score, String ages, String gradeLevel) {
+        this.score = score;
+        this.ages = ages;
+        this.gradeLevel = gradeLevel;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getAges() {
+        return ages;
+    }
+
+    public String getGradeLevel() {
+        return gradeLevel;
+    }
+
+    public static String getGLevel(int score) {
+        String ages = "";
+        for (Index index : values()) {
+            if (index.getScore() == score) {
+                ages = index.getAges();
+            }
+        }
+
+        return ages;
+    }
+}
