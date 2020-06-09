@@ -28,6 +28,7 @@ public class Main {
         int words = countWords(text);
         int sentences = countSentences(text);
         int chars = countChars(text);
+        int syllables = countSyllables(text);
 
         double score = 4.71 * ((double) chars / (double) words)
                     + 0.5 * ((double) words / (double) sentences)
@@ -38,9 +39,10 @@ public class Main {
                           "Words: %s\n" +
                           "Sentences: %s\n" +
                           "Characters: %s\n" +
+                          "Syllables: %d\n" +
                           "The score is: %.2f\n" +
                           "This text should be understood by %s year olds.",
-                           text, words, sentences, chars, score, level);
+                           text, words, sentences, chars, syllables, score, level);
 
     }
 
@@ -58,10 +60,50 @@ public class Main {
         return (int)matcher.results().count();
     }
 
+    public static int countSyllables(String text) {
+        int syllables = 0;
+
+        for (String s : text.trim().split("\\s+")) {
+            syllables += countWordSyllables(s);
+        }
+
+        return syllables;
+    }
+
     public static String gradeLevel(double score) {
         int s = (int)Math.ceil(score);
         String gLevel = Index.getGLevel(s);
 
         return gLevel;
+    }
+
+    public static int countWordSyllables(String word) {
+        
+        int vowels = 0;
+        char[] c = word.toCharArray();
+        char lastChar = 0;
+
+        for (int i = 0; i < c.length; i++) {
+            if (isVowel(c[i])) {
+                vowels++;
+
+                if (isVowel(lastChar)) {
+                    vowels--;
+                } else if (c[i] == 'e' && i == c.length - 1) {
+                    vowels--;
+                }
+
+                
+            }
+            lastChar = c[i];
+        }
+
+        return vowels > 0 ? vowels : 1; 
+    }
+
+    private static boolean isVowel(char c) {
+
+        return c == 'a' || c == 'e' || c == 'i' ||
+               c == 'o' || c == 'u' || c == 'y';
     }
 }
