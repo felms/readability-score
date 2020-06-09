@@ -14,7 +14,8 @@ public class Main {
             while (scanner.hasNext()) {
                 text += scanner.nextLine();
             }
-            ReadabilityTest rTest = new ReadabilityTest(text);
+            TextSummary textSummary = new TextSummary(text);
+            ReadabilityTest rTest = new ReadabilityTest(textSummary);
             rTest.analyzeText();
         } catch (FileNotFoundException fnfe) {
             System.err.println(fnfe);
